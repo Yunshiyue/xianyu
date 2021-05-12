@@ -18,6 +18,7 @@ import java.util.HashMap;
  */
 public class ServerOneJabber extends Thread {
     private final Socket socket;
+    private static final String password = "******";
     private static HashMap<String, Socket> userLogin = new HashMap<>();
 
     public ServerOneJabber(Socket s) throws IOException {
@@ -119,7 +120,7 @@ public class ServerOneJabber extends Thread {
 
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/xianyu?serverTimezone=UTC",
-                    "root","991019");
+                    "root",password);
             Statement stmt = conn.createStatement();
             String sql = "select userId from user where userId = '" + user.getUserId() + "'";
             ResultSet rs = stmt.executeQuery(sql);
@@ -148,7 +149,7 @@ public class ServerOneJabber extends Thread {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/xianyu?serverTimezone=UTC",
-                    "root","991019");
+                    "root",ServerOneJabber.password);
             Statement stmt = conn.createStatement();
             String sql = "select * from user where userId = '"+userId+"' and password = '"+ password + "'";
             ResultSet rs = stmt.executeQuery(sql);
@@ -217,7 +218,7 @@ public class ServerOneJabber extends Thread {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/xianyu?serverTimezone=UTC",
-                    "root","991019");
+                    "root",password);
             Statement stmt = conn.createStatement();
             String sql;
             if ("全部".equals(selectedType))
@@ -281,7 +282,7 @@ public class ServerOneJabber extends Thread {
 
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/xianyu?serverTimezone=UTC",
-                    "root","991019");
+                    "root",password);
             Statement stmt = conn.createStatement();
             String sql;
             sql = "select addedQuantity from shopping_cart where productId = " + productId + " and userId = '" + userId + "'";
@@ -330,7 +331,7 @@ public class ServerOneJabber extends Thread {
             String userId = dis.readUTF();
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/xianyu?serverTimezone=UTC",
-                    "root","991019");
+                    "root",password);
             System.out.println("连接");
             Statement stmt = conn.createStatement();
             String sql = "select * from shopping_cart as a join product as b on a.productId = b.productId " +
@@ -375,7 +376,7 @@ public class ServerOneJabber extends Thread {
             int updateQuantity = dis.readInt();
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/xianyu?serverTimezone=UTC",
-                    "root","991019");
+                    "root",password);
             Statement stmt = conn.createStatement();
             String sql = "select quantity from product where productId = " + productId;
             ResultSet rs = stmt.executeQuery(sql);
@@ -408,7 +409,7 @@ public class ServerOneJabber extends Thread {
             int productId = dis.readInt();
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/xianyu?serverTimezone=UTC",
-                    "root","991019");
+                    "root",password);
             Statement stmt = conn.createStatement();
             String sql = "delete from shopping_cart where userId = '" + userId + "' and productId = " + productId;
             stmt.executeUpdate(sql);
@@ -426,7 +427,7 @@ public class ServerOneJabber extends Thread {
             String userId = dis.readUTF();
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/xianyu?serverTimezone=UTC",
-                    "root","991019");
+                    "root",password);
             Statement stmt = conn.createStatement();
             String sql = "delete from shopping_cart where userId = '" + userId + "'";
             stmt.executeUpdate(sql);
@@ -444,7 +445,7 @@ public class ServerOneJabber extends Thread {
             String userId = dis.readUTF();
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/xianyu?serverTimezone=UTC",
-                    "root","991019");
+                    "root",password);
             Statement stmt = conn.createStatement();
             String sql = "select a.productId,price, quantity, addedQuantity from shopping_cart as a join product as b on a.productId = b.productId " +
                     "where selected = 1 and a.userId = '" + userId + "'";
@@ -483,7 +484,7 @@ public class ServerOneJabber extends Thread {
             int quantity = dis.readInt();
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/xianyu?serverTimezone=UTC",
-                    "root","991019");
+                    "root",password);
             Statement stmt = conn.createStatement();
             String sql = "update product set quantity = quantity +" + quantity + " where productId = " + productId;
             stmt.executeUpdate(sql);
@@ -505,7 +506,7 @@ public class ServerOneJabber extends Thread {
             int selected = dis.readInt();
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/xianyu?serverTimezone=UTC",
-                    "root","991019");
+                    "root",password);
             Statement stmt = conn.createStatement();
             String sql = "update shopping_cart set selected = " + selected + " where userId = '" + userId + "' and productId = " + productId;
             stmt.executeUpdate(sql);
@@ -524,7 +525,7 @@ public class ServerOneJabber extends Thread {
             String userId = dis.readUTF();
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/xianyu?serverTimezone=UTC",
-                    "root","991019");
+                    "root",password);
             Statement stmt = conn.createStatement();
             String sql = "select * from `order` as a join product as b on a.productId = b.productId " +
                     "where a.userId = '" + userId + "' order by a.status desc , dateCreated desc ";
@@ -570,7 +571,7 @@ public class ServerOneJabber extends Thread {
             int orderId = dis.readInt();
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/xianyu?serverTimezone=UTC",
-                    "root","991019");
+                    "root",password);
             Statement stmt = conn.createStatement();
             String sql = "update `order` set status = 0 where orderId = " + orderId;
             stmt.executeUpdate(sql);
@@ -593,7 +594,7 @@ public class ServerOneJabber extends Thread {
             String detail = dis.readUTF();
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/xianyu?serverTimezone=UTC",
-                    "root","991019");
+                    "root",password);
             Statement stmt = conn.createStatement();
             String sql = "insert into product (userId, productName, price, status, quantity, type, detail) values " +
                     "('" +userId+ "','" + productName + "'," + price + ", 'onSale'," + quantity + ",'" + type + "', '" + detail + "')";
@@ -631,7 +632,7 @@ public class ServerOneJabber extends Thread {
 
                 Class.forName("com.mysql.cj.jdbc.Driver");
                 Connection conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/xianyu?serverTimezone=UTC",
-                            "root","991019");
+                            "root",password);
                 Statement stmt = conn.createStatement();
                 String sql = "select * from product where userId = '" + userId + "' order by quantity desc ";
                 ResultSet rs = stmt.executeQuery(sql);
@@ -663,7 +664,7 @@ public class ServerOneJabber extends Thread {
             int productId = dis.readInt();
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/xianyu?serverTimezone=UTC",
-                    "root","991019");
+                    "root",password);
             Statement stmt = conn.createStatement();
             String sql = "update product set quantity = -1 where productId = " + productId;
             stmt.executeUpdate(sql);
@@ -684,7 +685,7 @@ public class ServerOneJabber extends Thread {
             String content = dis.readUTF();
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/xianyu?serverTimezone=UTC",
-                    "root","991019");
+                    "root",password);
             Statement stmt = conn.createStatement();
             String sql = "insert into comment (productId, userId, content, date) values (" + productId + ", '" + userId + "', '" + content + "', now())";
             stmt.executeUpdate(sql);
@@ -702,7 +703,7 @@ public class ServerOneJabber extends Thread {
             int productId = dis.readInt();
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/xianyu?serverTimezone=UTC",
-                    "root","991019");
+                    "root",password);
             Statement stmt = conn.createStatement();
             String sql = "select * from comment where productId = " + productId + " order by date ";
             ResultSet rs = stmt.executeQuery(sql);
@@ -733,7 +734,7 @@ public class ServerOneJabber extends Thread {
             String to = dis.readUTF();
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/xianyu?serverTimezone=UTC",
-                    "root","991019");
+                    "root",password);
             Statement stmt = conn.createStatement();
             String sql = "select * from chat where " +
                     "(userId1 = '" + from + "' and userId2 = '" + to + "') or (userId2 = '" + from + "' and userId1 = '" + to + "') order by chatDate ";
@@ -765,7 +766,7 @@ public class ServerOneJabber extends Thread {
             String userId = dis.readUTF();
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/xianyu?serverTimezone=UTC",
-                    "root","991019");
+                    "root",password);
             Statement stmt = conn.createStatement();
             String sql = "select distinct userId2 as userName from chat where userId1 = '" + userId +"' union " +
                     "select distinct userId1 as userName from chat where userId2 = '" + userId +"'";
@@ -792,7 +793,7 @@ public class ServerOneJabber extends Thread {
             String user2 = dis.readUTF();
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/xianyu?serverTimezone=UTC",
-                    "root","991019");
+                    "root",password);
             Statement stmt = conn.createStatement();
             String sql = "select * from chat where (userId1 = '" + user1 +"' and userId2 = '" + user2 +"') " +
                     "or (userId1 = '" + user2 +"' and userId2 = '" + user1 + "')";
@@ -819,7 +820,7 @@ public class ServerOneJabber extends Thread {
 
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/xianyu?serverTimezone=UTC",
-                    "root","991019");
+                    "root",password);
             Statement stmt = conn.createStatement();
             String sql = "select * from `order` as a join product as b on a.productId = b.productId " +
                     "where b.userId = '" + userId + "' order by a.status desc , a.dateCreated desc ";
